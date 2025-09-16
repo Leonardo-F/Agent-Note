@@ -1,1 +1,16 @@
-# Agent-Note
+<div align=center>
+<h1>Agent-Note</h1>
+</div>
+
+本项目基于 Datawhale 的《动手学 Agent 应用开发》课程，主要记录学习过程中的思考与收获，存储相关代码与学习资源。
+
+目标：
+- 搭建助教类 agent，辅助量子计算或其他学科学习；
+
+课程地址：
+- https://www.datawhale.cn/learn/summary/220
+
+学习资源：
+- hello-agents https://github.com/datawhalechina/Hello-Agents
+
+
