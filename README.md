@@ -14,3 +14,6 @@
 - hello-agents https://github.com/datawhalechina/Hello-Agents
 
 
+笔记目录：
+- Task 1 [Agent 应用开发与落地全景](docs/task01/task01.md)；
+- Task 2 [Agent 产品拆解](docs/task02/task02.md)；
