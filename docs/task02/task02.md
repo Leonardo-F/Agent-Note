@@ -23,14 +23,17 @@ Balzac 是一款 ai 文案撰写工具，可以根据我们提供的主题撰写
 ### AI产品设计/开发上线
 
 - 尝试使用博客功能，输入了 GitHub 主页，分析过往的存储库主题，给出潜在的受众，给出内容生成建议
+
 ![balzac_2](image/balzac_2.png)
 
 
-- 自动生成一些博文概要，或用户自定义主题、文章框架等，
+- 自动生成一些博文概要，或用户自定义主题、文章框架等
+
 ![balzac_3](image/balzac_3.png)
 
-- 生成最终文案，并配图
+- 生成最终博客文章，同时可以进行配图
 
+[how-github-repositories-fuel-quantum-computing-a-case-study-of-open-source-innovation](how-github-repositories-fuel-quantum-computing-a-case-study-of-open-source-innovation.md) 
 
 ![balzac_4](image/balzac_4.png)
 
