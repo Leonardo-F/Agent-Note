@@ -1,16 +1,19 @@
 import json5
 import re
 import time
+import json
+import os
+from datetime import datetime
 
-from llm import Siliconflow
-from tool import Tools
+from llm import DeepSeekModel
+from tool import ReactTools
 
 
 class ReactAgent:
     def __init__(self, api_key: str = '') -> None:
         self.api_key = api_key
-        self.tools = Tools()
-        self.model = Siliconflow(api_key=self.api_key)
+        self.tools = ReactTools()
+        self.model = DeepSeekModel(api_key=self.api_key)
         self.system_prompt = self._build_system_prompt()
         
     def _build_system_prompt(self) -> str:
@@ -38,7 +41,7 @@ class ReactAgent:
 
 你可以重复以上循环，直到获得足够的信息来回答问题。
 
-最终答案：基于所有信息给出最终答案
+最终答案：基于所有信息给出最终答案,并选择相关工具，将答案翻译成英文。即最终输出的答案为中文与英文两种语言的答案。
 
 开始！"""
         return prompt
@@ -102,12 +105,20 @@ class ReactAgent:
         conversation_history = []
         current_text = f"问题：{query}"
         
+        # 创建保存response的目录
+        response_dir = "code/agent_practice"
+        if not os.path.exists(response_dir):
+            os.makedirs(response_dir)
+        
         # 绿色ANSI颜色代码
         GREEN = '\033[92m'
         RESET = '\033[0m'
         
         if verbose:
             print(f"{GREEN}[ReAct Agent] 开始处理问题: {query}{RESET}")
+        
+        # 存储所有迭代的响应数据
+        all_responses = []
         
         for iteration in range(max_iterations):
             if verbose:
@@ -120,6 +131,18 @@ class ReactAgent:
                 self.system_prompt
             )
             
+            # 保存response到JSON文件
+            response_data = {
+                "query": query,
+                "iteration": iteration + 1,
+                "timestamp": datetime.now().isoformat(),
+                "response": response,
+                "history": history
+            }
+            
+            # 添加到所有响应列表
+            all_responses.append(response_data)
+            
             if verbose:
                 print(f"{GREEN}[ReAct Agent] 模型响应:\n{response}{RESET}")
             
@@ -130,6 +153,21 @@ class ReactAgent:
                 final_answer = self._format_response(response)
                 if verbose:
                     print(f"{GREEN}[ReAct Agent] 无需进一步行动，返回最终答案{RESET}")
+                
+                # 保存所有响应到JSON文件
+                final_data = {
+                    "query": query,
+                    "timestamp": datetime.now().isoformat(),
+                    "final_answer": final_answer,
+                    "is_final": True,
+                    "all_responses": all_responses
+                }
+                final_filename = f"{response_dir}/response.json"
+                with open(final_filename, 'w', encoding='utf-8') as f:
+                    json.dump(final_data, f, ensure_ascii=False, indent=2)
+                if verbose:
+                    print(f"{GREEN}[ReAct Agent] 对话历史已保存到: {final_filename}{RESET}")
+                
                 return final_answer
             
             if verbose:
@@ -148,10 +186,27 @@ class ReactAgent:
         # 达到最大迭代次数，返回当前响应
         if verbose:
             print(f"{GREEN}[ReAct Agent] 达到最大迭代次数，返回当前响应{RESET}")
+        
+        # 保存所有响应到JSON文件
+        final_data = {
+            "query": query,
+            "timestamp": datetime.now().isoformat(),
+            "final_answer": self._format_response(response),
+            "is_final": True,
+            "all_responses": all_responses
+        }
+        final_filename = f"{response_dir}/response.json"
+        with open(final_filename, 'w', encoding='utf-8') as f:
+            json.dump(final_data, f, ensure_ascii=False, indent=2)
+        if verbose:
+            print(f"{GREEN}[ReAct Agent] 对话历史已保存到: {final_filename}{RESET}")
+        
         return self._format_response(response)
 
 if __name__ == '__main__':
     agent = ReactAgent(api_key="your api key")
 
-    response = agent.run("美国最近一次阅兵的原因有哪些？", max_iterations=3, verbose=True)
+    print("开始处理问题：量子计算当前的挑战有哪些？") 
+    response = agent.run("量子计算当前的挑战有哪些？", max_iterations=2, verbose=True)
     print("最终答案：", response)
+    

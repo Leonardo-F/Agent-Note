@@ -15,11 +15,12 @@ ReAct 架构主要通过观察-思考-行动循环模式来实现决策：
 ![llm_deepseek](image/llm_deepseek.png)
 
 
-### Google Search  
+### Google Search  and Baidu Translate
 
-### Baidu Translate
+![tool_test](image/tool_test.png)
 
 
 ### Agent Test
+agent 运行结果：[agent_test.json](agent_test.json)
 
-
+![agent_test](image/agent_test.png)

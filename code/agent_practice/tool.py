@@ -3,7 +3,6 @@ import requests
 import hashlib
 import random
 from typing import Dict, List, Any
-from urllib.parse import quote_plus
 
 
 class ReactTools:
@@ -169,5 +168,14 @@ class ReactTools:
 
 if __name__ == "__main__":
     tools = ReactTools()
-    result = tools.google_search("美国最近一次阅兵原因 2025")
+    print("谷歌搜索结果：")
+    result = tools.google_search("什么是量子计算？")
     print(result)
+
+    # 中文翻译成英文
+    print("中文翻译成英文：")
+    result_translate = tools.baidu_translate("s", "zh", "en")
+    print(result_translate)
+
+
+

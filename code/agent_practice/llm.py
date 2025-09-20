@@ -66,7 +66,7 @@ class DeepSeekModel(BaseModel):
         return model_response, updated_history
 
 if __name__ == "__main__":
-    llm = DeepSeekModel(api_key="sk-aae264d56ba140d8843ab93d4285374e")
+    llm = DeepSeekModel(api_key="your api key")
     prompt = "你好, 你是谁，你能为我做些什么"
     response, history = llm.chat(prompt)
     print("Response:", response)
