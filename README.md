@@ -18,6 +18,7 @@
 - Task 1 [Agent 应用开发与落地全景](docs/task01/task01.md)；
 - Task 2 [Agent 产品拆解](docs/task02/task02.md)；
 - Task 3 [Agent 实践](docs/task03/task03.md)；
+- Task 4 [MCP 实践](docs/task04/task04.md)；
 
 运行环境：
 `python = 3.11` 和 `requirements.txt`
